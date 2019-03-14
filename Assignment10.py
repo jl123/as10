@@ -1,9 +1,8 @@
+
+
 import copy
 def main():
-   """ test the FhTree  class """
-import copy
-def main():
-   """ test the FhSdTree  class """
+   """ test main"""
 
    # instantiate a "data" tree of strings
    scene_tree = FhSdDataTree(str)
@@ -196,6 +195,7 @@ class FhTreeNode:
 
 # END CLASS FhTreeNode -------------------------------------------
 # BEGIN CLASS FhTree -------------------------------------------
+# noinspection PyAttributeOutsideInit
 class FhTree:
    """ FhTree is our base class for a data-filled general trees """
 
@@ -709,6 +709,7 @@ class FhSdDataTree(FhSdTree, FhDataTree):
          return None
 
       # found (current will survive all higher-level calls)
+      # if root.dltd do not do any further checks or visit children
       if not root.dltd:
          if root.data == x:
             self.current = root
@@ -730,10 +731,199 @@ class FhSdDataTree(FhSdTree, FhDataTree):
          return False
 
       new_node = FhSdDataTreeNode(x)
-      return( super().add_child_node_to_cur(new_node) )
+      return self.add_child_node_to_cur(new_node)
 
 
 # END CLASS FhSdTree -------------------------------------------
 # -------------- main program -------------------
 if __name__ == "__main__":
    main()
+"""ASSIGNMENT 10 RUN
+Starting tree empty? True
+
+------------ Loaded Tree --------------- 
+ The Tree -----------------------
+room
+ table
+  south west leg
+  south east leg
+  north west leg
+  north east leg
+ Miguel the human
+  torso
+   right arm
+    right hand
+     pinky
+     ring finger
+     middle finger
+     index finger
+     thumb
+   left arm
+    left hand
+     pinky
+     ring finger
+     middle finger
+     index finger
+     thumb
+ Lily the canine
+  torso
+   wagging tail
+   spare mutant paw
+   left rear paw
+   right rear paw
+   left front paw
+   right front paw
+---------- End of Tree --------
+
+
+----------- Virtual Tree ------------ 
+ The Tree -----------------------
+room
+ table
+  south west leg
+  south east leg
+  north west leg
+  north east leg
+ Lily the canine
+---------- End of Tree --------
+
+
+----------- Physical Tree ------------ 
+ The Physical Tree -----------------------
+room
+ table
+  south west leg
+  south east leg
+  north west leg
+  north east leg
+ Miguel the human (D)
+  torso
+   right arm
+    right hand
+     pinky
+     ring finger
+     middle finger
+     index finger
+     thumb
+   left arm
+    left hand
+     pinky
+     ring finger
+     middle finger
+     index finger
+     thumb
+ Lily the canine
+  torso (D)
+   wagging tail
+   spare mutant paw (D)
+   left rear paw
+   right rear paw
+   left front paw
+   right front paw
+---------- End of Physical Tree --------
+
+
+----------- Miguel and Torsso should be gone ------------ 
+
+good
+good
+good
+good
+
+------- Testing Sizes (compare with above) ------ 
+
+
+virtual (soft) size: 7
+
+physical (hard) size: 30
+
+------------ Collecting Garbage ------------ 
+
+found soft-deleted nodes? True
+immediate collect again? False
+-------- Hard Display after garb col ----------
+ The Physical Tree -----------------------
+room
+ table
+  south west leg
+  south east leg
+  north west leg
+  north east leg
+ Lily the canine
+---------- End of Physical Tree --------
+
+Semi-deleted tree empty? False
+Completely-deleted tree empty? True
+
+------------ Cloned Tree? ------------ 
+
+
+----------- Virtual Tree ------------ 
+ The Tree -----------------------
+room
+ table
+  south west leg
+  south east leg
+  north west leg
+  north east leg
+ Miguel the human
+  head
+ Lily the canine
+  torso
+   wagging tail
+   spare mutant paw
+   right rear paw
+   left front paw
+   right front paw
+---------- End of Tree --------
+
+
+----------- Physical Tree ------------ 
+ The Physical Tree -----------------------
+room
+ table
+  south west leg
+  south east leg
+  north west leg
+  north east leg
+ Miguel the human
+  head
+  torso (D)
+   right arm
+    right hand
+     pinky
+     ring finger
+     middle finger
+     index finger
+     thumb
+   left arm
+    left hand
+     pinky
+     ring finger
+     middle finger
+     index finger
+     thumb
+ Lily the canine
+  torso
+   wagging tail
+   spare mutant paw
+   left rear paw (D)
+   right rear paw
+   left front paw
+   right front paw
+---------- End of Physical Tree --------
+
+
+------------ Testing find() ------------ 
+
+good
+good
+good
+good
+good
+good
+good
+
+Process finished with exit code 0
+
+"""
